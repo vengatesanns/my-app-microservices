@@ -1,0 +1,41 @@
+body {
+   background-color: blanchedalmond;
+}
+
+h1 
+{
+    color: brown;
+}
+
+.login_panel 
+{
+    margin-top: 7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card_title_icon
+{
+    width: 15% !important;
+    height: 15% !important;
+    color:teal;
+}
+
+button
+{
+    margin: 0.4rem !important;
+}
+
+.button_color
+{
+    background-color: #e5d8bf !important;
+    border-color: brown !important;
+    color: black !important;
+}
+
+button.button_color:hover
+{
+    background-color: indianred !important;
+}
+

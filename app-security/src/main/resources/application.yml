@@ -1,0 +1,10 @@
+server:
+  port: 9005
+spring:
+  application:
+    name: oauth-server
+  couchbase:
+    bootstrap-hosts: 172.17.0.2
+    bucket:
+      name: vault
+      password: Vault@123
