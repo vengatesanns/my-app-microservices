@@ -4,7 +4,7 @@ spring:
   application:
     name: oauth-server
   couchbase:
-    bootstrap-hosts: 172.17.0.2
+    bootstrap-hosts: 52.186.25.36
     bucket:
       name: vault
       password: Vault@123
