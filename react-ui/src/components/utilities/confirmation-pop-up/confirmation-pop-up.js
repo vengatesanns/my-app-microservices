@@ -5,7 +5,7 @@ import './confirmation-pop-up.css';
 
 function PopUp(props) {
 
-    const { open, onClose, value, message, log } = props;
+    const { open, onClose, value, message } = props;
     let option = false;
 
     const handleClose = () => {
