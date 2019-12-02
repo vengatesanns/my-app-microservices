@@ -79,13 +79,6 @@ function MySnackbarContentWrapper(props) {
   );
 }
 
-// MySnackbarContentWrapper.propTypes = {
-//     className: PropTypes.string,
-//     message: PropTypes.string,
-//     onClose: PropTypes.func,
-//     variant: PropTypes.oneOf(['error', 'info', 'success', 'warning']).isRequired,
-// };
-
 export default function CustomizedSnackbars(props) {
   const [logger, setLogger] = useState({
     open: props.open,
@@ -120,6 +113,13 @@ export default function CustomizedSnackbars(props) {
   );
 }
 
+CustomizedSnackbars.propTypes = {
+  open: PropTypes.bool,
+  log_message: PropTypes.string,
+  log_info: PropTypes.oneOf(["error", "info", "success", "warning", "none"])
+    .isRequired
+};
+
 const Logger = {
   success: function(message) {
     return { open: true, log_info: "success", log_message: message };
@@ -134,7 +134,7 @@ const Logger = {
     return { open: true, log_info: "info", log_message: message };
   },
   default: function() {
-    return { open: false, log_info: "", log_message: "" };
+    return { open: false, log_info: "none", log_message: "" };
   }
 };
 export { Logger };

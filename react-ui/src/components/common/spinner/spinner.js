@@ -16,7 +16,7 @@ const Spinner = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <CircularProgress style={{ color: "orangered" }} size={100} />
+      <CircularProgress style={{ color: "cornsilk" }} size={80} />
     </div>
   );
 };

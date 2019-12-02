@@ -8,7 +8,6 @@ import FormValidator from "../utilities/form-validators";
 import { Validators, CustomFormControl } from "../utilities/validators_const";
 import PopUp from "../utilities/confirmation-pop-up/confirmation-pop-up";
 import CustomizedSnackbars, { Logger } from "../utilities/logger/logger";
-import Spinner from "../common/spinner/spinner";
 
 const setFormValidators = () => {
   return new FormValidator({
@@ -21,7 +20,8 @@ const setFormValidators = () => {
   });
 };
 
-const SignIn = () => {
+// Sign Component
+const SignIn = props => {
   const [state, setState] = useState({
     username: "",
     password: "",
@@ -33,7 +33,6 @@ const SignIn = () => {
     dialogMessage: ""
   });
   const [logger, setLogger] = useState(Logger.default());
-  const [loader, setLoader] = useState(false);
   const { username, password, form } = state;
 
   //Set Value to properties
@@ -53,18 +52,18 @@ const SignIn = () => {
       form: form
     });
     if (form.isValid) {
-      setLoader(true);
+      props.loader(true);
       axios
         .post(`${process.env.REACT_APP_OAUTH_API}`, getAPIParams(), {
           headers: getHeaders()
         })
         .then(response => {
-          setLoader(false);
+          props.loader(false);
           setLogger(Logger.success("Login Successfully!!!"));
           console.log(response);
         })
         .catch(error => {
-          setLoader(false);
+          props.loader(false);
           console.error(error);
         });
     }
@@ -132,71 +131,62 @@ const SignIn = () => {
   };
 
   return (
-    <div>
-      {loader ? (
-        <Spinner />
-      ) : (
-        <Container component="main">
-          <div className={SignInStyle.login_panel}>
-            <Form noValidate onSubmit={submitForm}>
-              <Card className="text-center">
-                <Card.Header>
-                  <FaUserCircle className={SignInStyle.card_title_icon} />
-                </Card.Header>
-                <Card.Body>
-                  <div className={SignInStyle.form_group}>
-                    <TextField
-                      required
-                      name="username"
-                      label="Username"
-                      margin="normal"
-                      variant="outlined"
-                      type="text"
-                      onChange={valueHandlerChange}
-                      value={username}
-                      error={form.username.isInvalid}
-                      helperText={form.username.message}
-                    />
-                  </div>
-                  <div className={SignInStyle.form_group}>
-                    <TextField
-                      required
-                      name="password"
-                      label="Password"
-                      margin="normal"
-                      variant="outlined"
-                      type="password"
-                      onChange={valueHandlerChange}
-                      value={password}
-                      error={form.password.isInvalid}
-                      helperText={form.password.message}
-                    />
-                  </div>
-                </Card.Body>
-                <Card.Footer className="text-center">
-                  <Button
-                    className={SignInStyle.button_color}
-                    onClick={openDialog}
-                  >
-                    Clear
-                  </Button>
-                  <Button type="submit" className={SignInStyle.button_color}>
-                    Login
-                  </Button>
-                </Card.Footer>
-              </Card>
-            </Form>
-          </div>
-          <PopUp
-            open={dialogProp.dialogOpen}
-            value={dialogProp.dialogValue}
-            onClose={closeDialog}
-            message={dialogProp.dialogMessage}
-          />
-          <CustomizedSnackbars {...logger} reset={resetLogger} />
-        </Container>
-      )}
-    </div>
+    <Container component="main">
+      <div className={SignInStyle.login_panel}>
+        <Form noValidate onSubmit={submitForm}>
+          <Card className="text-center">
+            <Card.Header>
+              <FaUserCircle className={SignInStyle.card_title_icon} />
+            </Card.Header>
+            <Card.Body>
+              <div className={SignInStyle.form_group}>
+                <TextField
+                  required
+                  name="username"
+                  label="Username"
+                  margin="normal"
+                  variant="outlined"
+                  type="text"
+                  onChange={valueHandlerChange}
+                  value={username}
+                  error={form.username.isInvalid}
+                  helperText={form.username.message}
+                />
+              </div>
+              <div className={SignInStyle.form_group}>
+                <TextField
+                  required
+                  name="password"
+                  label="Password"
+                  margin="normal"
+                  variant="outlined"
+                  type="password"
+                  onChange={valueHandlerChange}
+                  value={password}
+                  error={form.password.isInvalid}
+                  helperText={form.password.message}
+                />
+              </div>
+            </Card.Body>
+            <Card.Footer className="text-center">
+              <Button className={SignInStyle.button_color} onClick={openDialog}>
+                Clear
+              </Button>
+              <Button type="submit" className={SignInStyle.button_color}>
+                Login
+              </Button>
+            </Card.Footer>
+          </Card>
+        </Form>
+      </div>
+      <PopUp
+        open={dialogProp.dialogOpen}
+        value={dialogProp.dialogValue}
+        onClose={closeDialog}
+        message={dialogProp.dialogMessage}
+      />
+      <CustomizedSnackbars {...logger} reset={resetLogger} />
+    </Container>
   );
 };
 export default SignIn;
